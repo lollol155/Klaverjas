@@ -3,6 +3,7 @@
 #include "common.h"
 #include "hand.h"
 #include "trick.h"
+#include "round.h"
 #include "cards.h"
 
 namespace klaverjas
@@ -11,21 +12,18 @@ namespace klaverjas
 	public:
 		auto set_hand(hand_t hand) noexcept -> void { m_hand = hand; };
 
-		virtual auto play_hand() const noexcept -> bool
+		virtual constexpr auto play_hand() const noexcept -> const bool
 		{
-			return (count_trumps() * 10) + m_hand.to_value() > c_threshold_play;
+			return (m_hand.count(g_trump) * 10) + m_hand.to_value() > c_threshold_play;
 		}
 
-		virtual auto play_card(const trick_t* trick, const cards_t* cards, const int& postition) const noexcept -> card_t*
+		virtual auto play_card(const trick_t& trick, const round_t& round, const cards_t& cards) const noexcept -> card_t* const
 		{
+			auto playable_cards = m_hand.playable_hand(trick);
+			return playable_cards[0];
 		}
 
 	private:
-
-		auto count_trumps() const noexcept -> short
-		{
-			return (short) std::count_if(m_hand.cbegin(), m_hand.cend(), [](const card_t& card) { return card.suit == g_trump; });
-		}
 
 		hand_t m_hand;
 	};

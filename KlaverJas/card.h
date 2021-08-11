@@ -16,8 +16,55 @@ namespace klaverjas
     };
 
     struct card_t
-    {        
-        constexpr auto to_value() const noexcept -> int
+    {
+        constexpr auto operator>(const card_t& card) const noexcept
+        {
+            if (card.suit != suit) return card.suit == g_trump;
+            return to_value() > card.to_value();
+        }
+        
+        struct accumulate_value
+        {
+            constexpr auto operator()(const value_t& value, const card_t* card) const noexcept -> value_t
+            {
+                return value + card->to_value();
+            }
+        };
+
+        struct compare_suit
+        {
+            constexpr auto operator()(const card_t* card) const noexcept -> bool
+            {
+                return  card->suit == this->suit;
+            }
+
+            constexpr auto operator==(const card_t* card) const noexcept -> bool
+            {
+                return  card->suit == this->suit;
+            }
+
+            suit_t suit;
+        };
+
+        struct greater_card
+        {
+            constexpr auto operator()(card_t* const lhs, card_t* const rhs) const noexcept -> card_t* const
+            {
+                return *lhs > *rhs ? lhs : rhs;
+            }
+        };
+
+        struct greater_value_same_suit
+        {
+            constexpr auto operator()(const card_t* card) const noexcept -> bool
+            {
+                return *card > *(this->card) && card->suit == this->card->suit;
+            }
+
+            card_t* card;
+        };
+
+        constexpr auto to_value() const noexcept -> value_t
         {
             switch (rank)
             {
@@ -31,11 +78,11 @@ namespace klaverjas
             }
         }
 
+        constexpr operator value_t() const noexcept { return to_value(); }
+
         rank_t rank = rank_t::ace;
         suit_t suit = suit_t::spades;
         bool played = false;
-
-        operator int() const noexcept { return to_value(); }
     };
 }
 

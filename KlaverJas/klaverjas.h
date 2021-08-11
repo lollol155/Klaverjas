@@ -13,14 +13,9 @@ namespace klaverjas
 		klaverjas()
 		{
 			init_players();
-			for (auto& round : m_rounds)
+			for (;;)
 			{
-				shuffle();
-				for (auto& trick : round)
-				{
-					play_trick(trick);
-				}
-				flip();
+				play_round();
 			}
 		}
 
@@ -30,24 +25,40 @@ namespace klaverjas
 			m_starting_player = 0;
 			for (auto player = 0; player < c_players; player++)
 			{
-				m_players[player].set_hand(hand_t{ &m_cards[player * c_hand_size] });
+				hand_t hand;
+				//std::transform(m_cards.begin() + player * c_hand_size, m_cards.begin() + player * c_hand_size, hand.begin(), [](card_t& card) { return &card; });
+				m_players[player].set_hand(hand);
 			}
 		}
 
-		virtual auto play_trick(trick_t& trick) noexcept -> void
+		virtual auto play_round() noexcept -> const round_t
 		{
-			auto playing_player = who_plays();
-			for (auto player = 0, real_player = m_starting_player; player < c_players; player++, real_player = player % c_players)
+			round_t round;
+			shuffle();
+			for (;;)
 			{
-				trick.played_cards[real_player];
-				// every player plays card
-
-				//card_t* players[player % c_players].which_card(cards);
+				play_trick(round);
+				next_starting_player();
 			}
+			flip();
+		}
+
+		virtual auto play_trick(const round_t& round) noexcept -> const trick_t
+		{
+			//auto playing_player = who_plays();
+			trick_t trick;
+			for (auto counter = 0, player = m_starting_player; counter < c_players; counter++, player = counter % c_players)
+			{
+				auto played_card = m_players[player].play_card(trick, round, m_cards) + player * c_hand_size;
+				//trick.emplace(player, &played_card);
+				played_card->played = true;
+			}
+
+
 			// calculate score
 
 
-			next_starting_player();
+			return trick;
 		}
 
 		virtual auto who_plays() noexcept -> int

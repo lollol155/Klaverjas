@@ -7,9 +7,9 @@ namespace klaverjas
 {
 	struct rounds_t : public std::array<round_t, c_rounds>
 	{
-		constexpr auto score(const team_t team) const noexcept -> score_t
+		constexpr auto score(const team_t team) const noexcept -> value_t
 		{
-			return std::accumulate(cbegin(), cend(), 0, [&](score_t lhs, round_t rhs) { return lhs + rhs.score(team); });
+			return std::accumulate(cbegin(), cend(), 0, [&](value_t lhs, round_t rhs) { return lhs + rhs.score(team); });
 		};
 	};
 }

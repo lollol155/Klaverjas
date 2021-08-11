@@ -4,19 +4,28 @@
 #include <array>
 #include <cassert>
 #include <memory>
+#include <functional>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
 #include <numeric>
 #include <iterator>
 #include <random>
+#include <vector>
 #include <ranges>
+#include <cmath>
 
 #include "constants.h"
 
+//TODO can i make stuf iteratros?
 namespace klaverjas
 {
+	namespace ranges = std::ranges;
+
 	enum class suit_t : unsigned short;
 	static suit_t g_trump = static_cast<suit_t>(2); // clubs
 
-	typedef int score_t;
+	typedef int value_t;
 	typedef int team_t;
 
 	static std::random_device device;

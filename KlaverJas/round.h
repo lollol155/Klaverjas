@@ -7,9 +7,9 @@ namespace klaverjas
 {
 	struct round_t : public std::array<trick_t, c_tricks>
 	{
-		constexpr auto score(const short player) const noexcept -> score_t
+		constexpr auto score(const short player) const noexcept -> value_t
 		{
-			return std::accumulate(cbegin(), cend(), 0, [&](const score_t lhs, const trick_t rhs) { return player == rhs.player ? lhs + rhs.score() : lhs; });
+			return std::accumulate(cbegin(), cend(), 0, [&](const value_t& lhs, const trick_t& rhs) { return player == rhs.who_started() ? lhs + rhs.score() : lhs; });
 		};
 	};
 }
