@@ -31,7 +31,7 @@ namespace klaverjas
             }
         };
 
-        struct compare_suit
+        struct is_suit
         {
             constexpr auto operator()(const card_t* card) const noexcept -> bool
             {
@@ -46,7 +46,7 @@ namespace klaverjas
             suit_t suit;
         };
 
-        struct greater_card
+        struct is_greater
         {
             constexpr auto operator()(card_t* const lhs, card_t* const rhs) const noexcept -> card_t* const
             {
@@ -54,7 +54,7 @@ namespace klaverjas
             }
         };
 
-        struct greater_value_same_suit
+        struct is_greater_and_same_suit
         {
             constexpr auto operator()(const card_t* card) const noexcept -> bool
             {

@@ -10,12 +10,12 @@ namespace klaverjas
     {
         constexpr auto count(const suit_t& suit) const noexcept -> const long long
         {
-            return std::count_if(cbegin(), cend(), card_t::compare_suit(suit));
+            return std::count_if(cbegin(), cend(), card_t::is_suit(suit));
         }
 
         constexpr auto find(const suit_t& suit) const noexcept -> const bool
         {
-            return std::find(cbegin(), cend(), card_t::compare_suit(suit)) != cend();
+            return std::find(cbegin(), cend(), card_t::is_suit(suit)) != cend();
         }
 
         constexpr auto highest(const suit_t& suit) const noexcept -> const value_t
@@ -34,14 +34,14 @@ namespace klaverjas
         constexpr auto playable_cards(const suit_t& suit) const noexcept -> const std::vector<card_t*>
         {
             std::vector<card_t*> cards(size());
-            std::copy_if(begin(), end(), cards.begin(), card_t::compare_suit(suit));
+            std::copy_if(begin(), end(), cards.begin(), card_t::is_suit(suit));
             return cards;
         }
 
         constexpr auto playable_trumps(card_t* const trick_card) const noexcept -> const std::vector<card_t*>
         {
             std::vector<card_t*> cards(size());
-            std::copy_if(begin(), end(), cards.begin(), card_t::greater_value_same_suit(trick_card));
+            std::copy_if(begin(), end(), cards.begin(), card_t::is_greater_and_same_suit(trick_card));
             return cards;
         }
 
