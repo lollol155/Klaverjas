@@ -18,11 +18,11 @@ namespace klaverjas
 			assert(started()); 
 			return cbegin()->second->suit;
 		}
-		auto highest() const noexcept -> card_t* const
+		auto highest() const noexcept -> card_t* 
 		{ 
 			assert(started());
-			//return std::transform_reduce(begin() + 1, end(),*begin(), card_t::greater_card(), [](const std::pair<int, card_t*>& pair) { return pair.second; });
-			return cbegin()->second;
+			return nullptr;
+			//return std::transform_reduce(begin(), end(),*begin(), card_t::is_greater(), [](const std::pair<int, card_t*>& pair) { return pair.second; }).second;
 		}
 		constexpr auto score() const noexcept -> const value_t { return std::accumulate(cbegin(), cend(), 0, [](value_t value, const std::unordered_map<int, card_t*>::value_type& card) { return value + card.second->to_value(); }); }
 		constexpr auto roem() const noexcept -> value_t { return 0; } // TODO

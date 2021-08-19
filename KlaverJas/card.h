@@ -84,5 +84,6 @@ namespace klaverjas
         suit_t suit = suit_t::spades;
         bool played = false;
     };
+
 }
 
