@@ -9,7 +9,7 @@ namespace klaverjas
 	{
 		constexpr auto score(const short player) const noexcept -> value_t
 		{
-			return std::accumulate(cbegin(), cend(), 0, [&](const value_t& lhs, const trick_t& rhs) { return player == rhs.who_started() ? lhs + rhs.score() : lhs; });
+			return std::accumulate(cbegin(), cend(), 0, [&](const value_t& lhs, const trick_t& rhs) { return player == rhs.who_started() ? lhs + rhs.to_value() : lhs; });
 		};
 	};
 }

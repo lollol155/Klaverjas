@@ -27,6 +27,8 @@ TEST(larger, card) {
 
 	g_trump = suit_t::clubs;
 	EXPECT_TRUE(card > card2);
+	EXPECT_TRUE(card2 < card);
 	g_trump = suit_t::diamonds;
 	EXPECT_TRUE(card2 > card);
+	EXPECT_TRUE(card < card2);
 }

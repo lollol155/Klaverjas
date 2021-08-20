@@ -21,8 +21,7 @@ namespace klaverjas
         constexpr auto highest(const suit_t& suit) const noexcept -> const card_t*
         {
             std::vector<card_t*> cards = playable_cards(suit);
-            return *ranges::max_element(cards, [](card_t* const lhs, card_t* const rhs) { return lhs->to_value() < rhs->to_value(); });
-            //return *ranges::max_element(cards, card_t::is_greater());
+            return *ranges::max_element(cards, card_t::is_less());
         }
 
         constexpr auto playable_cards() const noexcept -> const std::vector<card_t*>
@@ -65,6 +64,6 @@ namespace klaverjas
             return std::accumulate(cbegin(), cend(), 0, card_t::accumulate_value());
         }
 
-        operator const value_t() const noexcept { return to_value(); }
+        constexpr operator const value_t() const noexcept { return to_value(); }
     };
 }

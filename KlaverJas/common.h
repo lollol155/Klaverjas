@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <cassert>
+#include <execution>
 #include <memory>
 #include <functional>
 #include <unordered_map>
@@ -17,7 +18,6 @@
 
 #include "constants.h"
 
-//TODO can i make stuf iteratros?
 namespace klaverjas
 {
 	namespace ranges = std::ranges;
