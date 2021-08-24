@@ -41,7 +41,7 @@ namespace klaverjas
         constexpr auto playable_trumps(card_t* const trick_card) const noexcept -> const std::vector<card_t*>
         {
             std::vector<card_t*> cards;
-            std::copy_if(begin(), end(), std::back_inserter(cards), card_t::is_greater_and_same_suit(trick_card));
+            std::copy_if(begin(), end(), std::back_inserter(cards), card_t::is_greater_and_trump(trick_card));
             if (cards.empty())
             {
                 cards = playable_cards(trick_card->suit);
@@ -53,7 +53,7 @@ namespace klaverjas
         {
             if (trick.started())
             {
-                if (find(trick.suit())) return playable_cards(trick.suit());
+                if (trick.suit() != g_trump && find(trick.suit())) return playable_cards(trick.suit());
                 if (find(g_trump)) return playable_trumps(trick.highest());
             }
             return playable_cards();

@@ -14,6 +14,6 @@ namespace klaverjas
 
         auto shuffle() noexcept-> void { ranges::shuffle(_Elems, engine); }
 
-        auto reset() noexcept-> void { }// TODO std::ranges::for_each(_Elems, [](auto& played) { played = false;  }, & card_t::played); }
+        auto reset() noexcept-> void { ranges::for_each(_Elems, [](auto& played) { played = false;  }, &card_t::played); }
     };
 }

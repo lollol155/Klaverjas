@@ -26,7 +26,8 @@ namespace klaverjas
 			for (auto player = 0; player < c_players; player++)
 			{
 				hand_t hand;
-				//std::transform(m_cards.begin() + player * c_hand_size, m_cards.begin() + player * c_hand_size, hand.begin(), [](card_t& card) { return &card; });
+				hand.resize(c_hand_size);
+				std::transform(m_cards.begin() + player * c_hand_size, m_cards.begin() + player * c_hand_size + c_hand_size, hand.begin(), [](card_t& card) { return &card; });
 				m_players[player].set_hand(hand);
 			}
 		}

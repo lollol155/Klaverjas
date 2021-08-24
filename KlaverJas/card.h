@@ -31,7 +31,7 @@ namespace klaverjas
         
         struct accumulate_value
         {
-            constexpr auto operator()(const value_t& lhs, const card_t* rhs) const noexcept -> value_t
+            constexpr auto operator()(const value_t& lhs, const card_t* const rhs) const noexcept -> const value_t
             {
                 return lhs + rhs->to_value();
             }
@@ -43,12 +43,11 @@ namespace klaverjas
 
         struct is_suit
         {
-            constexpr auto operator()(const card_t* card) const noexcept -> bool const
+            constexpr auto operator()(const card_t* const card) const noexcept -> const bool
             {
                 return  card->suit == this->suit;
             }
-
-            constexpr auto operator==(const card_t* card) const noexcept -> bool const
+            constexpr auto operator==(const card_t* const card) const noexcept -> const bool
             {
                 return  card->suit == this->suit;
             }
@@ -58,7 +57,7 @@ namespace klaverjas
 
         struct max
         {
-            constexpr auto operator()(card_t* const lhs, card_t* const rhs) const noexcept -> card_t* const
+            constexpr auto operator()(const card_t* const lhs, const card_t* const rhs) const noexcept -> const card_t* const
             {
                 return *lhs > *rhs ? lhs : rhs;
             }
@@ -70,17 +69,17 @@ namespace klaverjas
 
         struct is_less
         {
-            constexpr auto operator()(card_t* const lhs, card_t* const rhs) const noexcept -> bool const
+            constexpr auto operator()(const card_t* const lhs, const card_t* const rhs) const noexcept -> const bool
             {
                 return *lhs < *rhs;
             }
         };
 
-        struct is_greater_and_same_suit
+        struct is_greater_and_trump
         {
-            constexpr auto operator()(const card_t* card) const noexcept -> bool const
+            constexpr auto operator()(const card_t* const card) const noexcept -> const bool
             {
-                return *card > *(this->card) && card->suit == this->card->suit;
+                return *card > *(this->card) && card->suit == g_trump;
             }
 
             card_t* card;
