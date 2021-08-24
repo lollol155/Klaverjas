@@ -13,5 +13,10 @@ namespace klaverjas
         }
 
         auto shuffle() noexcept-> void { ranges::shuffle(_Elems, engine); }
+
+        ~cards_t()
+        {
+            ranges::for_each(_Elems, [](card_t* card) { delete card; });
+        }
     };
 }
