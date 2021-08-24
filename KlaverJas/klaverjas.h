@@ -52,7 +52,7 @@ namespace klaverjas
 			{
 				auto played_card = m_players[player].play_card(trick, round, m_cards) + player * c_hand_size;
 				//trick.emplace(player, &played_card);
-				played_card->played = true;
+				//played_card->played = true;
 			}
 
 
@@ -75,7 +75,7 @@ namespace klaverjas
 			}
 		}
 
-		auto shuffle() noexcept -> void	{ m_cards.reset(); m_cards.shuffle(); }
+		auto shuffle() noexcept -> void	{ m_cards.shuffle(); }
 
 		auto flip() noexcept -> void { g_trump = static_cast<suit_t>(suit_distribution(engine)); }
 

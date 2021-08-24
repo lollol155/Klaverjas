@@ -19,7 +19,7 @@ namespace klaverjas
 		auto suit() const noexcept -> const suit_t
 		{ 
 			assert(started()); 
-			return cbegin()->second->suit;
+			return cbegin()->second->first;
 		}
 		auto highest() const noexcept -> card_t* const
 		{ 

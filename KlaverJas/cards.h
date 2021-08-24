@@ -9,11 +9,9 @@ namespace klaverjas
     {
         cards_t()
         {
-            ranges::generate(_Elems, [n = 0]() mutable { return card_t{ static_cast<rank_t>(n % c_ranks), static_cast<suit_t>(n++ / c_ranks) }; });
+            ranges::generate(_Elems, [n = 0]() mutable { return card_t { std::make_pair(static_cast<suit_t>(n / c_ranks), static_cast<rank_t>(n++ % c_ranks)) }; });
         }
 
         auto shuffle() noexcept-> void { ranges::shuffle(_Elems, engine); }
-
-        auto reset() noexcept-> void { ranges::for_each(_Elems, [](auto& played) { played = false;  }, &card_t::played); }
     };
 }

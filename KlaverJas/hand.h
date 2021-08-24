@@ -44,7 +44,7 @@ namespace klaverjas
             std::copy_if(begin(), end(), std::back_inserter(cards), card_t::is_greater_and_trump(trick_card));
             if (cards.empty())
             {
-                cards = playable_cards(trick_card->suit);
+                cards = playable_cards(trick_card->first);
             }
             return cards;
         }

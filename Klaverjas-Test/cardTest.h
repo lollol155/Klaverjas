@@ -5,8 +5,8 @@ using namespace klaverjas;
 
 TEST(value, card) {
 	card_t card;
-	card.suit = suit_t::clubs;
-	card.rank = rank_t::jack;
+	card.first = suit_t::clubs;
+	card.second = rank_t::jack;
 
 	g_trump = suit_t::clubs;
 	EXPECT_EQ(card.to_value(), 20);
@@ -18,12 +18,12 @@ TEST(value, card) {
 
 TEST(larger, card) {
 	card_t card;
-	card.suit = suit_t::clubs;
-	card.rank = rank_t::jack;
+	card.first = suit_t::clubs;
+	card.second = rank_t::jack;
 
 	card_t card2;
-	card2.suit = suit_t::clubs;
-	card2.rank = rank_t::ace;
+	card2.first = suit_t::clubs;
+	card2.second = rank_t::ace;
 
 	g_trump = suit_t::clubs;
 	EXPECT_TRUE(card > card2);

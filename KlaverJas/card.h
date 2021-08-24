@@ -15,17 +15,17 @@ namespace klaverjas
         hearts, diamonds, clubs, spades
     };
 
-    struct card_t
+    struct card_t : public std::pair<suit_t, rank_t>
     {
         constexpr auto operator>(const card_t& card) const noexcept -> const bool
         {
-            if (card.suit != suit) return card.suit != g_trump;
+            if (card.first != first) return card.first != g_trump;
             return to_value() > card.to_value();
         }
 
         constexpr auto operator<(const card_t& card) const noexcept -> const bool
         {
-            if (card.suit != suit) return suit == g_trump;
+            if (card.first != first) return first == g_trump;
             return to_value() < card.to_value();
         }
         
@@ -45,11 +45,11 @@ namespace klaverjas
         {
             constexpr auto operator()(const card_t* const card) const noexcept -> const bool
             {
-                return  card->suit == this->suit;
+                return  card->first == this->suit;
             }
             constexpr auto operator==(const card_t* const card) const noexcept -> const bool
             {
-                return  card->suit == this->suit;
+                return  card->first == this->suit;
             }
 
             suit_t suit;
@@ -79,7 +79,7 @@ namespace klaverjas
         {
             constexpr auto operator()(const card_t* const card) const noexcept -> const bool
             {
-                return *card > *(this->card) && card->suit == g_trump;
+                return *card > *(this->card) && card->first == g_trump;
             }
 
             card_t* card;
@@ -87,23 +87,19 @@ namespace klaverjas
 
         constexpr auto to_value() const noexcept -> value_t
         {
-            switch (rank)
+            switch (second)
             {
-            case rank_t::nine:  return g_trump == suit ? 14 : 0;
+            case rank_t::nine:  return first == g_trump ? 14 : 0;
             case rank_t::ace:   return 11;
             case rank_t::ten:   return 10;
-            case rank_t::jack:  return g_trump == suit ? 20 : 2;
+            case rank_t::jack:  return first == g_trump ? 20 : 2;
             case rank_t::queen: return 3;
             case rank_t::king:  return 4;
             default:            return 0;
             }
         }
 
-        constexpr operator value_t() const noexcept { return to_value(); }
-
-        rank_t rank = rank_t::ace;
-        suit_t suit = suit_t::spades;
-        bool played = false;
+        constexpr operator value_t() const noexcept { return to_value(); }        
     };
 
 }
